@@ -6,7 +6,7 @@
         <div class="col">
             <a href="{{ action('ArticleController@create') }}" class="btn btn-primary">New Article</a>
 
-            <table class="table">
+            <table class="table mt-5">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -21,11 +21,11 @@
                         <tr>
                             <td>{{ str_limit($article->title, 60) ?? '-' }}</td>
                             <td>{{ $article->status ?? '-' }}</td>
-                            <td>{{ $article->created_at ?? '-' }}</td>
-                            <td>{{ $article->updated_at ?? '-' }}</td>
+                            <td>{{ $article->created_at->diffForHumans() ?? '-' }}</td>
+                            <td>{{ $article->updated_at->format('d/m/Y') ?? '-' }}</td>
                             <td>
                                 <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Actions
                                     </button>
                                     <div class="dropdown-menu">

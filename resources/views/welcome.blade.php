@@ -1,21 +1,18 @@
 @extends('layouts.app')
 
-@section('styles')
-<style media="screen">
-    h1 {
-        color: red
-    }
-</style>
-@endsection
-
 @section('content')
-
-@endsection
-
-@section('scripts')
-<script>
-    $(function () {
-        alert('ini bahagian scripts');
-    });
-</script>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            @forelse ($articles as $article)
+                <a href="#"><h1 class="display-4">{{ $article->title }}</h1></a>
+                <article>
+                    {!! str_limit($article->body, 400, '...') !!}
+                </article>
+            @empty
+                There is no articles.
+            @endforelse
+        </div>
+    </div>
+</div>
 @endsection

@@ -1,6 +1,10 @@
 <?php
 
-Route::view('/', 'welcome')->name('welcome');
+Route::get('/', 'PublicController@welcome')
+->name('public.welcome');
+Route::get('{username}/articles/{slug}', 'PublicController@showArticle')
+->name('public.articles');
+
 Route::get('profile', 'ProfileController@profile')->name('profile');
 Route::patch('profile', 'ProfileController@saveProfile');
 Route::resource('articles', 'ArticleController');

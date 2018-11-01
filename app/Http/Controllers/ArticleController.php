@@ -49,8 +49,16 @@ class ArticleController extends Controller
         $article->title     = $request->title;
         $article->slug      = str_slug($request->title);
         $article->body      = $request->body;
-        $article->status    = 'draft';
+        $article->status    = $request->has('draft') ? 'draft' : 'published';
         $article->saveOrFail();
+
+        // Cara kedua
+        Article::create([
+            'user_id'   => $request->user()->id,
+            'title'     => $request->title,
+            'body'      => $request->body,
+            'status'    => $request->has('draft') ? 'draft' : 'published',
+        ]);
 
         session()->flash('flash.type', 'success');
         session()->flash('flash.message', 'Article succesfully saved.');

@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            
+
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -36,7 +36,15 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Publish</button>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary">Save & Publish</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <button type="submit" name="draft" class="dropdown-item">Save as Draft</button>
+                        </div>
+                    </div>
                 </div>
 
             </form>

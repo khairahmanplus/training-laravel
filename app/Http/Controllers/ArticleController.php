@@ -14,8 +14,13 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        // select * from articles
-        $articles = Article::get();
+        $query = Article::query();
+
+        if (auth()->user()->isNotAdministrator()) {
+            $query->where('user_id', auth()->id());
+        }
+
+        $articles = $query->get();
 
         return view('articles.index', compact('articles'));
     }

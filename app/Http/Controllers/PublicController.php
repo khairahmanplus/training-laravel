@@ -10,14 +10,17 @@ class PublicController extends Controller
 {
     public function welcome()
     {
-        // select * from articles where status = published OR where
-        $articles = Article::where('status', 'published')->paginate();
+        // select * from articles where status = published
+        $articles = Article::with('user')->where('status', 'published')->paginate();
 
         return view('welcome', compact('articles'));
     }
 
-    public function showArticle()
+    public function showArticle($username, $slug)
     {
+        // select * from articles where slug = $slug limit 1
+        $article = Article::where('slug', $slug)->firstOrFail();
 
+        return view('show_article', compact('article'));
     }
 }

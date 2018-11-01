@@ -5,7 +5,10 @@
     <div class="row">
         <div class="col">
             @forelse ($articles as $article)
-                <a href="#"><h1 class="display-4">{{ $article->title }}</h1></a>
+                <a href="{{ action('PublicController@showArticle', [$article->user->username, $article->slug]) }}">
+                    <h1 class="display-4">{{ $article->title }}</h1>
+                </a>
+                <small>Written by {{ $article->user->name }}</small>
                 <article>
                     {!! str_limit($article->body, 400, '...') !!}
                 </article>

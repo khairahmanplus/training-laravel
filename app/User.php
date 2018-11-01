@@ -40,4 +40,9 @@ class User extends Authenticatable
     {
         return ! $this->isAdministrator();
     }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'user_id', 'id');
+    }
 }

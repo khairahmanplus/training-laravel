@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            @dump(session()->get('teks'))
+            
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>

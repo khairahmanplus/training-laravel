@@ -14,13 +14,26 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $query = Article::query();
-
+        // Cara 1
         if (auth()->user()->isNotAdministrator()) {
-            $query->where('user_id', auth()->id());
+            $articles = Article::where('user_id', auth()->id())->get();
+        } else {
+            $articles = Article::get();
         }
 
-        $articles = $query->get();
+        // Cara 2
+        // $query = Article::query();
+        //
+        // if (auth()->user()->isNotAdministrator()) {
+        //     $query->where('user_id', auth()->id());
+        // }
+        //
+        // $articles = $query->get();
+
+        // Cara 3
+        // $articles = Article::when(auth()->user()->isNotAdministrator(), function ($query) {
+        //     $query->where('user_id', auth()->id());
+        // })->get();
 
         return view('articles.index', compact('articles'));
     }

@@ -53,12 +53,12 @@ class ArticleController extends Controller
         $article->saveOrFail();
 
         // Cara kedua
-        Article::create([
-            'user_id'   => $request->user()->id,
-            'title'     => $request->title,
-            'body'      => $request->body,
-            'status'    => $request->has('draft') ? 'draft' : 'published',
-        ]);
+        // Article::create([
+        //     'user_id'   => $request->user()->id,
+        //     'title'     => $request->title,
+        //     'body'      => $request->body,
+        //     'status'    => $request->has('draft') ? 'draft' : 'published',
+        // ]);
 
         session()->flash('flash.type', 'success');
         session()->flash('flash.message', 'Article succesfully saved.');
@@ -87,7 +87,9 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $article = Article::findOrFail($id);
+
+        return view('articles.edit', compact('article'));
     }
 
     /**
@@ -99,7 +101,23 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|min:5|max:150|string',
+            'body'  => 'required|min:5|max:10000'
+        ]);
+
+        $article = Article::findOrFail($id);
+
+        $article->update([
+            'title'     => $request->title,
+            'body'      => $request->body,
+            'status'    => $request->has('draft') ? 'draft' : 'published'
+        ]);
+
+        session()->flash('flash.type', 'success');
+        session()->flash('flash.message', 'Articles succesfully updated.');
+
+        return redirect()->route('articles.index');
     }
 
     /**

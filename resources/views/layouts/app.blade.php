@@ -26,6 +26,7 @@
         </main>
     </div>
 
+    @yield('modals')
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('scripts')

@@ -31,7 +31,7 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ action('ArticleController@show', $article->id) }}">Details</a>
                                         <a class="dropdown-item" href="{{ action('ArticleController@edit', $article->id) }}">Edit</a>
-                                        <a class="dropdown-item" href="{{ action('ArticleController@destroy', $article->id) }}">Delete</a>
+                                        <a class="dropdown-item" href="{{ action('ArticleController@destroy', $article->id) }}" data-toggle="modal" data-target="#delete-confirmation-modal">Delete</a>
                                     </div>
                                 </div>
                             </td>
@@ -47,4 +47,21 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('modals')
+    @include('component.delete_confirmation')
+@endsection
+
+@section('scripts')
+<script>
+    $(function () {
+        $('#delete-confirmation-modal').on('shown.bs.modal', function (e) {
+            let buttonDOM   = $(e.relatedTarget);
+            let url         = buttonDOM.attr('href');
+            let modal       = $(this);
+            modal.find('form').attr('action', url);
+        });
+    });
+</script>
 @endsection

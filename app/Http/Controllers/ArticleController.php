@@ -107,6 +107,10 @@ class ArticleController extends Controller
         ]);
 
         $article = Article::findOrFail($id);
+        // $article->title     = $request->title;
+        // $article->body      = $request->body;
+        // $article->status    = $request->has('draft') ? 'draft' : 'published';
+        // $article->saveOrFail();
 
         $article->update([
             'title'     => $request->title,
@@ -128,6 +132,13 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Cara pertama
+        $article = Article::findOrFail($id);
+        $article->delete();
+
+        // Cara kedua
+        Article::destroy($id);
+
+        return back();
     }
 }

@@ -53,15 +53,21 @@ class ArticleController extends Controller
         }
 
         $article = Article::create([
-            'user_id'   => 1,
+            'user_id'   => 1, // auth()->id()
             'title'     => $request->title,
+            'slug'      => str_slug($request->title),
             'body'      => $request->body,
             'status'    => $request->status
         ]);
 
         return response()->json([
-            'status'    =>'berjaya',
-            'data'      => $article
+            'status'    => 'berjaya',
+            'data'      => [
+                'id'            => $article->id,
+                'tajuk'         => $article->title,
+                'isi_kandungan' => $article->body,
+                'status'        => $article->status
+            ]
         ], 201);
     }
 
@@ -73,7 +79,17 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        $article = Article::findOrFail($id);
+
+        return response()->json([
+            'status'    => 'berjaya',
+            'data'      => [
+                'id'            => $article->id,
+                'tajuk'         => $article->title,
+                'isi_kandungan' => $article->body,
+                'status'        => $article->status
+            ]
+        ]);
     }
 
     /**
@@ -85,7 +101,29 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = validator($request->all(), [
+            'title'     => 'required',
+            'body'      => 'required',
+            'status'    => [
+                'required',
+                Rule::in(['draft', 'published'])
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $article = Article::findOrFail($id);
+
+        $article->update();
+
+        return response()->json([
+            'status'    => 'berjaya',
+            'data'      => $article
+        ]);
     }
 
     /**
@@ -96,6 +134,10 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Article::destroy($id);
+
+        return response()->json([
+            'status'    => 'berjaya',
+        ], 204);
     }
 }

@@ -7,6 +7,11 @@ use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('login');
+    }
+
     public function login()
     {
         $validator = validator(request()->all(), [
@@ -56,7 +61,7 @@ class AuthController extends Controller
     public function me()
     {
         $user = auth('api')->user();
-        
+
         return response()->json([
             'name'      => $user->name,
             'email'     => $user->email,

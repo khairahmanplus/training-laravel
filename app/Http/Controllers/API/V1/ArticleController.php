@@ -118,7 +118,11 @@ class ArticleController extends Controller
 
         $article = Article::findOrFail($id);
 
-        $article->update();
+        $article->update([
+            'title'     => $request->title,
+            'body'      => $request->body,
+            'status'    => $request->status
+        ]);
 
         return response()->json([
             'status'    => 'berjaya',

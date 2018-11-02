@@ -52,4 +52,14 @@ class AuthController extends Controller
             'expires_in'    => auth('api')->factory()->getTTL() * 60
         ]);
     }
+
+    public function me()
+    {
+        $user = auth('api')->user();
+        
+        return response()->json([
+            'name'      => $user->name,
+            'email'     => $user->email,
+        ]);
+    }
 }

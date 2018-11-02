@@ -18,8 +18,8 @@ class ArticleController extends Controller
     {
         $articles = Article::get()->map(function ($article) {
             return [
-                'tajuk'             => $article->title ?? '-',
-                'isi_kandungan'     => $article->body ?? '-',
+                'tajuk'             => $article->title  ?? '-',
+                'isi_kandungan'     => $article->body   ?? '-',
             ];
         });
 

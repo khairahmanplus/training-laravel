@@ -131,7 +131,8 @@ class ArticleController extends Controller
                 'id'            => $article->id,
                 'tajuk'         => $article->title,
                 'isi_kandungan' => $article->body,
-                'status'        => $article->status
+                'status'        => $article->status,
+                'url'           => route('api.articles.show', $article->id)
             ]
         ]);
     }

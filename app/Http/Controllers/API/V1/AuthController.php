@@ -43,4 +43,13 @@ class AuthController extends Controller
             'status'    => 'Successfully logout'
         ]);
     }
+
+    public function refresh()
+    {
+        return response()->json([
+            'access_token'  => auth('api')->refresh(),
+            'token_type'    => 'bearer',
+            'expires_in'    => auth('api')->factory()->getTTL() * 60
+        ]);
+    }
 }

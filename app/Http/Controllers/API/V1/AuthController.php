@@ -34,4 +34,13 @@ class AuthController extends Controller
             'expires_in'    => auth('api')->factory()->getTTL() * 60
         ]);
     }
+
+    public function logout()
+    {
+        auth('api')->logout();
+
+        return response()->json([
+            'status'    => 'Successfully logout'
+        ]);
+    }
 }

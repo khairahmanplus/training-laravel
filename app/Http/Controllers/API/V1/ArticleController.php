@@ -66,7 +66,8 @@ class ArticleController extends Controller
                 'id'            => $article->id,
                 'tajuk'         => $article->title,
                 'isi_kandungan' => $article->body,
-                'status'        => $article->status
+                'status'        => $article->status,
+                'url'           => route('api.articles.show', $article->id)
             ]
         ], 201);
     }
@@ -126,7 +127,12 @@ class ArticleController extends Controller
 
         return response()->json([
             'status'    => 'berjaya',
-            'data'      => $article
+            'data'      => [
+                'id'            => $article->id,
+                'tajuk'         => $article->title,
+                'isi_kandungan' => $article->body,
+                'status'        => $article->status
+            ]
         ]);
     }
 
